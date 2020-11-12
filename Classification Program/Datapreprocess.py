@@ -1,7 +1,7 @@
 import pandas as pd
 import numpy as np
 from numpy import random
-
+# changes?
 def generate_label0_data(arr_size, p_fever, p_tiredness, p_dry_cough, p_breathing, p_sore_throat, p_pains, p_nasal_congestion,
                          p_runny_nose, p_diarrhea, p_contact_yes, p_contact_no_given_not_yes, p_gender):
     generated_training_inputs, generated_training_labels = ([], [])
@@ -86,6 +86,7 @@ def rand_choose(col,df):
 
     return to_return
 
+
 def Preprocess():
     df = pd.read_csv('Cleaned-Data.csv')
     col = ['Severity_None', 'Severity_Mild', 'Severity_Moderate', 'Severity_Severe']
@@ -105,3 +106,5 @@ def Preprocess():
         cleaned_data.loc[len(cleaned_data)] = temp
 
     cleaned_data.to_csv("processed_input.csv", index=False)
+
+
