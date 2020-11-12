@@ -17,6 +17,8 @@ col = ['Severity_None', 'Severity_Mild', 'Severity_Moderate', 'Severity_Severe']
 
 cleaned_data = rand_choose(col,df)
 cleaned_data = cleaned_data[['Fever', 'Tiredness', 'Dry-Cough', 'Difficulty-in-Breathing', 'Sore-Throat', 'Pains', 'Nasal-Congestion', 'Runny-Nose', 'Diarrhea', 'Contact_Dont-Know', 'Contact_No', 'Contact_Yes' ]]
-#print(cleaned_data.head())
+labels = np.ones(1000)
+cleaned_data['Label'] = labels
 
-cleaned_data.to_csv("processed_input.csv",index=False)
+
+cleaned_data.to_csv("processed_input.csv", index=False)
