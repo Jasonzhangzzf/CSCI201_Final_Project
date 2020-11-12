@@ -86,21 +86,22 @@ def rand_choose(col,df):
 
     return to_return
 
-df = pd.read_csv('Cleaned-Data.csv')
-col = ['Severity_None', 'Severity_Mild', 'Severity_Moderate', 'Severity_Severe']
+def Preprocess():
+    df = pd.read_csv('Cleaned-Data.csv')
+    col = ['Severity_None', 'Severity_Mild', 'Severity_Moderate', 'Severity_Severe']
 
+    cleaned_data = rand_choose(col, df)
+    cleaned_data = cleaned_data[
+        ['Fever', 'Tiredness', 'Dry-Cough', 'Difficulty-in-Breathing', 'Sore-Throat', 'Pains', 'Nasal-Congestion',
+         'Runny-Nose', 'Diarrhea', 'Contact_Dont-Know', 'Contact_No', 'Contact_Yes']]
+    labels = np.ones(500)
+    cleaned_data['Label'] = labels
+    label0_inputs, label0_labels = generate_label0_data(500, 0.3, 0.5, 0.3, 0.3, 0.3, 0.5, 0.6, 0.6, 0.5, 0.3, 0.7, 0.5)
+    # append label 0 array
+    for i in range(len(label0_inputs)):
+        temp = label0_inputs[i]
+        temp.append(0)
 
-cleaned_data = rand_choose(col,df)
-cleaned_data = cleaned_data[['Fever', 'Tiredness', 'Dry-Cough', 'Difficulty-in-Breathing', 'Sore-Throat', 'Pains', 'Nasal-Congestion', 'Runny-Nose', 'Diarrhea', 'Contact_Dont-Know', 'Contact_No', 'Contact_Yes' ]]
-labels = np.ones(500)
-cleaned_data['Label'] = labels
-label0_inputs, label0_labels = generate_label0_data(500, 0.3, 0.5, 0.3, 0.3, 0.3, 0.5, 0.6, 0.6, 0.5, 0.3, 0.7, 0.5)
-# append label 0 array
-for i in range(len(label0_inputs)):
-    temp = label0_inputs[i]
-    temp.append(0)
+        cleaned_data.loc[len(cleaned_data)] = temp
 
-    cleaned_data.loc[len(cleaned_data)] = temp
-
-
-cleaned_data.to_csv("processed_input.csv", index=False)
+    cleaned_data.to_csv("processed_input.csv", index=False)
