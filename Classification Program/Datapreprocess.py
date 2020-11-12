@@ -1,7 +1,7 @@
 import pandas as pd
 import numpy as np
 from numpy import random
-
+# changes?
 def generate_label0_data(arr_size, p_fever, p_tiredness, p_dry_cough, p_breathing, p_sore_throat, p_pains, p_nasal_congestion,
                          p_runny_nose, p_diarrhea, p_contact_yes, p_contact_no_given_not_yes, p_gender):
     generated_training_inputs, generated_training_labels = ([], [])
