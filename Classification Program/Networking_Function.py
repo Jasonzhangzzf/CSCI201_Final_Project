@@ -1,7 +1,7 @@
 import socket
 import numpy as np
 from Datapreprocess import Preprocess
-from Classification_Client import load_data
+from Data_Loading_Writing import load_data
 
 def connection(user_array):
     # local host IP '127.0.0.1'
