@@ -2,6 +2,7 @@ import socket
 import numpy as np
 from Datapreprocess import Preprocess
 from Data_Loading_Writing import load_data, write_data
+from Classification import KNN_Classification
 
 def connection():
     # local host IP '127.0.0.1'
@@ -42,6 +43,9 @@ def connection():
         if response[0] == '0':
             for x in range(12):
                 user_array[userID][x] = int(response[9+x])
+            result = str(KNN_Classification(my_data, user_array[userID][0:11]))
+            s.sendall(str(userID) + result + '\n')
+
 
         elif response[0] == '1':
             user_array[userID][12] = int(response[21])

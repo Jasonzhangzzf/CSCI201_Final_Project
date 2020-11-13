@@ -21,6 +21,3 @@ def KNN_Classification(my_data, user_symptom):
     #Predict Output
     predicted= model.predict([user_symptom]) # 0:negative, 1:positive
     print(predicted)
-
-my_data = load_data()
-KNN_Classification(my_data, [0,1,0,0,0,1,1,1,1,1,0,0])
