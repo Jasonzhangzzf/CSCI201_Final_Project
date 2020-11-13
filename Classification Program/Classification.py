@@ -17,7 +17,9 @@ def KNN_Classification(my_data, user_symptom):
 
     # Train the model using the training sets
     model.fit(symptoms, labels)
-
     #Predict Output
     predicted= model.predict([user_symptom]) # 0:negative, 1:positive
-    print(predicted)
+    if(predicted == [0.0]):
+        return 0
+    else:
+        return 1

@@ -23,10 +23,9 @@ def connection():
     user_array = np.empty([256, 13], dtype=int)
     my_data = load_data()
 
-
+    s.sendall(b'Connection_Established\n')
     while 1:
         # message sent to server
-        s.sendall(b'Hello, world\n')
 
         # messaga received from server
         data = s.recv(1024)
@@ -43,8 +42,10 @@ def connection():
         if response[0] == '0':
             for x in range(12):
                 user_array[userID][x] = int(response[9+x])
-            result = str(KNN_Classification(my_data, user_array[userID][0:11]))
-            s.sendall(str(userID) + result + '\n')
+            result = str(KNN_Classification(my_data, user_array[userID][0:12]))
+            to_send = response[1:9] + result +'\n';
+            s.send(to_send.encode())
+
 
 
         elif response[0] == '1':
