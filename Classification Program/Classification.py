@@ -23,4 +23,4 @@ def KNN_Classification(my_data, user_symptom):
     print(predicted)
 
 my_data = load_data()
-KNN_Classification(my_data, [0,1,1,0,0,1,1,0,0,1,0,0])
+KNN_Classification(my_data, [0,1,0,0,0,1,1,1,1,1,0,0])

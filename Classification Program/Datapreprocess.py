@@ -107,4 +107,5 @@ def Preprocess():
 
     cleaned_data.to_csv("processed_input.csv", index=False)
 
+Preprocess()
 
