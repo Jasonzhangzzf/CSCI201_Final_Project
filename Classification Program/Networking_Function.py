@@ -1,9 +1,9 @@
 import socket
 import numpy as np
 from Datapreprocess import Preprocess
-from Data_Loading_Writing import load_data
+from Data_Loading_Writing import load_data, write_data
 
-def connection(user_array):
+def connection():
     # local host IP '127.0.0.1'
     host = '127.0.0.1'
 
@@ -23,7 +23,7 @@ def connection(user_array):
     my_data = load_data()
 
 
-    while True:
+    while 1:
         # message sent to server
         s.sendall(b'Hello, world\n')
 
@@ -45,11 +45,12 @@ def connection(user_array):
 
         elif response[0] == '1':
             user_array[userID][12] = int(response[21])
-
+            write_data(user_array, userID)
 
 
 
     # close the connection
     s.close()
 
-
+if __name__ == "__main__":
+    connection()
