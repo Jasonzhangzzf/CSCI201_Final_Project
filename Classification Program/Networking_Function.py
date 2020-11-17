@@ -23,7 +23,7 @@ def connection():
     user_array = np.empty([256, 13], dtype=int)
     my_data = load_data()
 
-    s.sendall(b'Connection_Established\n')
+    # s.sendall(b'Connection_Established\n')
     while 1:
         # message sent to server
 
