@@ -9,6 +9,7 @@ import base64
 from io import BytesIO
 import urllib
 import webbrowser
+import os
 
 host = '127.0.0.1'
 port = 1234
@@ -33,6 +34,7 @@ if (gender == 1):
     compacted_data = full_data[(full_data["Fever"] == fever) & (full_data["Tiredness"] == tiredness) & (full_data["Dry-Cough"] == dry_cough) & (full_data["Difficulty-in-Breathing"] == difficulty_breathing) & (full_data["Pains"] == pains) & (full_data["Runny-Nose"].astype(np.int) == runny_nose) & (full_data["Gender_Male"] == 1)]
 else:
     compacted_data = full_data[(full_data["Fever"] == fever) & (full_data["Tiredness"] == tiredness) & (full_data["Dry-Cough"] == dry_cough) & (full_data["Difficulty-in-Breathing"] == difficulty_breathing) & (full_data["Pains"] == pains) & (full_data["Runny-Nose"].astype(np.int) == runny_nose) & (full_data["Gender_Female"] == 1)]
+
 none_data = compacted_data.groupby("Severity_None")["Severity_None"].count()
 if (type(none_data) == None):
     num_none = 0
@@ -65,7 +67,44 @@ elif (severe_data.get(1) == None):
 else:
     num_severe = severe_data[1]
 
-total = num_none + num_mild + num_moderate + num_severe
+if ((num_none == 0) | (num_mild == 0) | (num_moderate == 0) | (num_severe == 0)):
+    if (gender == 1):
+        compacted_data = full_data[(full_data["Fever"] == fever) & (full_data["Tiredness"] == tiredness) & (full_data["Gender_Male"] == 1)]
+    else:
+        compacted_data = full_data[(full_data["Fever"] == fever) & (full_data["Tiredness"] == tiredness) & (full_data["Gender_Female"] == 1)]
+
+    none_data = compacted_data.groupby("Severity_None")["Severity_None"].count()
+    if (type(none_data) == None):
+        num_none = 0
+    elif (none_data.get(1) == None):
+        num_none = 0
+    else:
+        num_none = none_data[1]
+
+    mild_data = compacted_data.groupby("Severity_Mild")["Severity_Mild"].count()
+    if (type(mild_data) == None):
+        num_mild = 0
+    elif (mild_data.get(1) == None):
+        num_mild = 0
+    else:
+        num_mild = mild_data[1]
+
+    moderate_data = compacted_data.groupby("Severity_Moderate")["Severity_Moderate"].count()
+    if (type(moderate_data) == None):
+        num_moderate = 0
+    elif (moderate_data.get(1) == None):
+        num_moderate = 0
+    else:
+        num_moderate = moderate_data[1]
+
+    severe_data = compacted_data.groupby("Severity_Severe")["Severity_Severe"].count()
+    if (type(severe_data) == None):
+        num_severe = 0
+    elif (severe_data.get(1) == None):
+        num_severe = 0
+    else:
+        num_severe = severe_data[1]
+    
 
 most_significant = len(str(num_none)) - 2
 if (most_significant < 3):
@@ -83,7 +122,6 @@ plt.title("COVID-19 Severity with Similar Symptoms")
 tmpfile = BytesIO()
 fig.savefig(tmpfile, format='png')
 encoded = base64.b64encode(tmpfile.getvalue()).decode('utf-8')
-plt.savefig('test.png')
 
 html = "<!DOCTYPE html>\n<html>\n<head>\n<style>\nimg {\n  width: 50%;\n}\n</style>\n</head>\n<body>\n" 
 html += "<h1>COVID-19 Severity with Similar Symptoms</h1>\n<img src=\'data:image/png;base64,{}\'>".format(encoded) + "\n</body>\n</html>"
