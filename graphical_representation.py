@@ -13,7 +13,7 @@ import webbrowser
 host = '127.0.0.1'
 port = 1234
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-#s.connect((host, port))
+s.connect((host, port))
 
 full_data = pd.read_csv("Documents/2020-21/CSCI-201/Final_project/Cleaned-Data.csv")
 
@@ -21,7 +21,6 @@ fraction = int(len(full_data) * 15 / 17)
 full_data = full_data.sample(frac = 1)
 full_data = full_data.iloc[0:fraction, 0:len(full_data.columns)]
     
-print(len(full_data))
 fever = 1
 tiredness = 1
 dry_cough = 1
@@ -67,11 +66,6 @@ else:
     num_severe = severe_data[1]
 
 total = num_none + num_mild + num_moderate + num_severe
-print(total)
-print(num_none)
-print(num_mild)
-print(num_moderate)
-print(num_severe)
 
 most_significant = len(str(num_none)) - 2
 if (most_significant < 3):
@@ -97,5 +91,4 @@ html += "<h1>COVID-19 Severity with Similar Symptoms</h1>\n<img src=\'data:image
 with open("test.html", 'w') as f:
     f.write(html)
     
-
 webbrowser.open_new_tab('test.html')
