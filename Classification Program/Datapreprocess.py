@@ -3,7 +3,7 @@ import numpy as np
 from numpy import random
 # changes?
 def generate_label0_data(arr_size, p_fever, p_tiredness, p_dry_cough, p_breathing, p_sore_throat, p_pains, p_nasal_congestion,
-                         p_runny_nose, p_diarrhea, p_contact_yes, p_contact_no_given_not_yes, p_gender):
+                         p_runny_nose, p_diarrhea, p_contact_dont_know, p_contact_no, p_contact_yes):
     generated_training_inputs, generated_training_labels = ([], [])
     # create arrays with size to be arr_size
     for i in range(arr_size):
@@ -52,23 +52,22 @@ def generate_label0_data(arr_size, p_fever, p_tiredness, p_dry_cough, p_breathin
         else:
             new_input.append(0)
 
-        #if contact is yes, push the remaining 2 symptoms as 0s
-        if (random.rand() <= p_contact_yes):
+        #if contact is dont know, push the remaining 2 symptoms as 0s
+        if (random.rand() <= p_contact_dont_know):
+            new_input.append(1)
             new_input.append(0)
             new_input.append(0)
         # if contact is no, push the remaining 1 symptom as 0
-        elif(random.rand() <= p_contact_no_given_not_yes):
+        elif(random.rand() <= p_contact_no):
             new_input.append(0)
-            new_input.append(1)
-
-        else:
             new_input.append(1)
             new_input.append(0)
 
-        if (random.rand() <= p_gender):
-            new_input.append(1)
         else:
             new_input.append(0)
+            new_input.append(0)
+            new_input.append(1)
+
         # add to training and label array
         generated_training_inputs.append(new_input)
         generated_training_labels.append(0)
@@ -97,7 +96,7 @@ def Preprocess():
          'Runny-Nose', 'Diarrhea', 'Contact_Dont-Know', 'Contact_No', 'Contact_Yes']]
     labels = np.ones(500)
     cleaned_data['Label'] = labels
-    label0_inputs, label0_labels = generate_label0_data(500, 0.3, 0.5, 0.3, 0.3, 0.3, 0.5, 0.6, 0.6, 0.5, 0.3, 0.7, 0.5)
+    label0_inputs, label0_labels = generate_label0_data(500, 0.3, 0.5, 0.3, 0.3, 0.3, 0.5, 0.6, 0.6, 0.1, 0.3, 0.7)
     # append label 0 array
     for i in range(len(label0_inputs)):
         temp = label0_inputs[i]
