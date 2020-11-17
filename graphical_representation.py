@@ -1,8 +1,12 @@
 import pandas as pd
 import numpy as np
 import mpld3
-from mpld3 import plugins
-from random import *
+import socket
+
+host = '127.0.0.1'
+port = 1234
+s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+s.connect((host, port))
 
 full_data = pd.read_csv("Documents/2020-21/CSCI-201/Final project/Cleaned-Data.csv")
 
