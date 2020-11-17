@@ -87,7 +87,7 @@ def rand_choose(col,df):
 
 
 def Preprocess():
-    df = pd.read_csv('../Cleaned-Data.csv')
+    df = pd.read_csv('Cleaned-Data.csv')
     col = ['Severity_None', 'Severity_Mild', 'Severity_Moderate', 'Severity_Severe']
 
     cleaned_data = rand_choose(col, df)

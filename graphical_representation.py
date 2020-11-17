@@ -16,7 +16,7 @@ port = 4567
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 s.connect((host, port))
 
-full_data = pd.read_csv("Cleaned-Data.csv")
+full_data = pd.read_csv("Classification Program/Cleaned-Data.csv")
 # full_data = pd.read_csv("Documents/2020-21/CSCI-201/Final_project/Cleaned-Data.csv")
 
 fraction = int(len(full_data) * 15 / 17)
