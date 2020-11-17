@@ -7,6 +7,8 @@ from random import *
 import matplotlib.pyplot as plt
 import base64
 from io import BytesIO
+import urllib
+import webbrowser
 
 host = '127.0.0.1'
 port = 1234
@@ -31,8 +33,7 @@ gender = 0
 if (gender == 1):
     compacted_data = full_data[(full_data["Fever"] == fever) & (full_data["Tiredness"] == tiredness) & (full_data["Dry-Cough"] == dry_cough) & (full_data["Difficulty-in-Breathing"] == difficulty_breathing) & (full_data["Pains"] == pains) & (full_data["Runny-Nose"].astype(np.int) == runny_nose) & (full_data["Gender_Male"] == 1)]
 else:
-    compacted_data = full_data[(full_data["Fever"] == fever) & (full_data["Tiredness"] == tiredness) & (full_data["Dry-Cough"] == dry_cough)]# & (full_data["Difficulty-in-Breathing"] == difficulty_breathing) & (full_data["Sore-Throat"] == sore_throat) & (full_data["Pains"] == pains) & (full_data["Nasal-Congestion"] == nasal_congestion) & (full_data["Runny-Nose"] == runny_nose) & (full_data["Diarrhea"] == diarrhea) & (full_data["Gender_Female"] == 1)]
-
+    compacted_data = full_data[(full_data["Fever"] == fever) & (full_data["Tiredness"] == tiredness) & (full_data["Dry-Cough"] == dry_cough) & (full_data["Difficulty-in-Breathing"] == difficulty_breathing) & (full_data["Pains"] == pains) & (full_data["Runny-Nose"].astype(np.int) == runny_nose) & (full_data["Gender_Female"] == 1)]
 none_data = compacted_data.groupby("Severity_None")["Severity_None"].count()
 if (type(none_data) == None):
     num_none = 0
@@ -82,15 +83,19 @@ ax = fig.add_axes([0, 0, 1, 1])
 ax.axis('equal')
 severity = ['None', 'Mild', 'Moderate', 'Severe']
 amounts = [num_none % divisor, num_mild % divisor, num_moderate % divisor, num_severe % divisor]
-ax.pie(amounts, labels = severity, autopct='%1.2f%%')
+ax.pie(amounts, labels = severity, autopct='%1.1f%%')
+plt.title("COVID-19 Severity with Similar Symptoms")
 
 tmpfile = BytesIO()
 fig.savefig(tmpfile, format='png')
 encoded = base64.b64encode(tmpfile.getvalue()).decode('utf-8')
 plt.savefig('test.png')
 
-html = "<!DOCTYPE html>\n<html>\n<head>\n<style>\nimg {\n  width: 50%;\n}\n</style>\n</head>\n<body>" 
-html += "<img src=\'data:image/png;base64,{}\'>".format(encoded) + "\n</body>\n</html>"
+html = "<!DOCTYPE html>\n<html>\n<head>\n<style>\nimg {\n  width: 50%;\n}\n</style>\n</head>\n<body>\n" 
+html += "<h1>COVID-19 Severity with Similar Symptoms</h1>\n<img src=\'data:image/png;base64,{}\'>".format(encoded) + "\n</body>\n</html>"
 
 with open("test.html", 'w') as f:
     f.write(html)
+    
+
+webbrowser.open_new_tab('test.html')
