@@ -16,12 +16,8 @@ port = 4567
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 s.connect((host, port))
 
-full_data = pd.read_csv("Classification Program/Cleaned-Data.csv")
+full_data = pd.read_csv("sampled_data.csv")
 # full_data = pd.read_csv("Documents/2020-21/CSCI-201/Final_project/Cleaned-Data.csv")
-
-fraction = int(len(full_data) * 15 / 17)
-full_data = full_data.sample(frac = 1)
-full_data = full_data.iloc[0:fraction, 0:len(full_data.columns)]
 
 while 1:
     data = s.recv(1024)
