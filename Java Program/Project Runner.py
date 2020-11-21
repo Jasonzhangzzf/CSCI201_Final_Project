@@ -1,2 +1,2 @@
 import os
-os.system('javac Login.java')
+os.system('python3 Networking_Function.py')
